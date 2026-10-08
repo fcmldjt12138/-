@@ -271,7 +271,7 @@ class SyncRepository(private val db: AppDatabase) {
         return snapshotKey(merged) != snapshotKey(remote)
     }
 
-    private fun <T> mergeById(local: List<T>, remote: List<T>, idOf: (T) -> String): List<T> {
+    private fun <T : Any> mergeById(local: List<T>, remote: List<T>, idOf: (T) -> String): List<T> {
         val result = linkedMapOf<String, T>()
         local.forEach { result[idOf(it)] = it }
         remote.forEach { incoming ->
