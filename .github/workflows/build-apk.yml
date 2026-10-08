@@ -11,13 +11,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Unpack project ZIP
-        run: |
-          test -f childpoints-project.zip
-          mkdir -p build-src
-          unzip -q childpoints-project.zip -d build-src
-          rm -f build-src/.git* || true
-
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
@@ -38,16 +31,16 @@ jobs:
           gradle-version: '8.13'
 
       - name: Build Parent APK
-        run: gradle -p build-src/ParentApp :app:assembleDebug --no-daemon
+        run: gradle -p ParentApp :app:assembleDebug --no-daemon
 
       - name: Build Child APK
-        run: gradle -p build-src/ChildApp :app:assembleDebug --no-daemon
+        run: gradle -p ChildApp :app:assembleDebug --no-daemon
 
       - name: Collect APKs
         run: |
           mkdir -p release-apks
-          cp build-src/ParentApp/app/build/outputs/apk/debug/app-debug.apk release-apks/ParentPoints-debug.apk
-          cp build-src/ChildApp/app/build/outputs/apk/debug/app-debug.apk release-apks/ChildPoints-debug.apk
+          cp ParentApp/app/build/outputs/apk/debug/app-debug.apk release-apks/ParentPoints-debug.apk
+          cp ChildApp/app/build/outputs/apk/debug/app-debug.apk release-apks/ChildPoints-debug.apk
 
       - name: Upload APKs
         uses: actions/upload-artifact@v4
