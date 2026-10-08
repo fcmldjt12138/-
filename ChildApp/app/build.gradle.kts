@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.example.childpoints"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.example.childpoints"
